@@ -25,6 +25,13 @@ echo $this->formRow($form->get('last_name'));
 echo $this->formRow($form->get('po_box'));
 echo $this->formRow($form->get('street'));
 echo $this->formRow($form->get('city'));
+if ($form->getAttribute('credit_limit')!='NONE')echo $this->formRow($form->get('credit_limit'));
+if ($form->getAttribute('id')!='NONE')echo $this->formRow($form->get('id'));
+if ($form->getAttribute('credit_balance')!='NONE')echo $this->formRow($form->get('credit_balance'));
+if ($form->getAttribute('brn')!='NONE')echo $this->formRow($form->get('brn'));
+if ($form->getAttribute('trn')!='NONE')echo $this->formRow($form->get('trn'));
+if ($form->getAttribute('email')!='NONE')echo $this->formRow($form->get('email'));
+if ($form->getAttribute('emp_id')!='NONE')echo $this->formRow($form->get('emp_id'));
 echo $this->formSubmit($form->get('submit'));
 echo $this->form()->closeTag();
 
