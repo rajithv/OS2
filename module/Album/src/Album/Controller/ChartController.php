@@ -83,25 +83,65 @@ class ChartController extends AbstractActionController
     public function priceVariationAction()
     {
         //Generates a line chart based on item prices
+        $item=1;
+
         $sm = $this->getServiceLocator();
         $testCon = new TestController();
-        $query = 'select * from item_prices order by start_date;'; //sort to make it more meaningful
+
+        $query = 'select * from item_prices where item_no='.$item.' order by start_date ;'; //sort to make it more meaningful
+        //echo $query;
+        $resultSet = $testCon->runSql($query, $sm);
+
+
+
+        $sql = 'SELECT * from items';
+        $items = $testCon->runSql($sql, $this->getServiceLocator());
+
+        if($_POST["showClicked"] == 'show'){
+            $item= $_POST["item"];
+            $query = 'select * from item_prices where item_no='.$item.' order by start_date ;'; //sort to make it more meaningful
+            //echo $query;
+            $resultSet = $testCon->runSql($query, $sm);
+            //echo $query;
+        }
+
+        $data = array( );
+        foreach ($resultSet as $row){
+            array_push($data,array('date' => $row->start_date , 'Price' => (int)$row->price));
+        }
+        $type = "ComboChart";
+        return array(
+            'type' => $type,
+            'data' => $data,
+            'items' => $items,
+
+        );
+
+
+
+
+
+
+    }
+
+    public function orderTimelineAction()
+    {
+        //Generates a line chart based on sales
+        $sm = $this->getServiceLocator();
+        $testCon = new TestController();
+        $query = 'select date,count(*) as count from orders group by date order by date;'; //sort to make it more meaningful
         $resultSet = $testCon->runSql($query, $sm);
 
 
         $data = array( );
         foreach ($resultSet as $row){
-            array_push($data,array('date' => $row->start_date , 'Price' => (int)$row->price));
+            array_push($data,array('Date' => $row->date , 'Sales' => (int)$row->count));
         }
         $type = "LineChart";
         return array(
             'type' => $type,
             'data' => $data,
         );
-    }
-
-    public function orderTimelineAction()
-    {
 
     }
 }

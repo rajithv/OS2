@@ -18,9 +18,21 @@ $this->headTitle($title);
     </div>
     <table class="table table-striped">
         <tr>
+<<<<<<< HEAD
             <th>order_no</th>
             <th>date</th>
             <th>&nbsp;</th>
+=======
+            <td><?php echo $this->escapeHtml($order->order_no);?></td>
+            <td><?php echo $this->escapeHtml($order->date);?></td>
+            <td class="text-right">
+                <a href="<?php echo $this->url('order',
+                    array('action'=>'view', 'id' => $order->order_no));?>"><input type="button"
+                                                                                  class="btn btn-xs btn-default"
+                                                                                  value="View"></a>
+
+            </td>
+>>>>>>> 1c6d9b3... Order Items
         </tr>
         <?php foreach ($orders as $order) : ?>
             <tr>
